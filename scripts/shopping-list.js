@@ -83,10 +83,17 @@ const shoppingList = (function(){
   function handleItemCheckClicked() {
     $('.js-shopping-list').on('click', '.js-item-toggle', event => {
       const id = getItemIdFromElement(event.currentTarget);
-      store.findAndToggleChecked(id);
-      render();
+      const item = store.findById(id);
+      const updateData = {
+        checked: !(item.checked)
+      };
+      const callback = function() {
+        store.findAndUpdate(id, updateData);
+        render();
+      };
+      api.updateItem(id, updateData, callback);
     });
-  }
+  };
   
   function handleDeleteItemClicked() {
     // like in `handleItemCheckClicked`, we use event delegation
@@ -105,6 +112,10 @@ const shoppingList = (function(){
       event.preventDefault();
       const id = getItemIdFromElement(event.currentTarget);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
+      api.updateItem(id, newName, function(){
+        store.findAndUpdate(id, newName);
+        render();
+      });
       store.findAndUpdateName(id, itemName);
       store.setItemIsEditing(id, false);
       render();
