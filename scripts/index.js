@@ -10,14 +10,3 @@ $(document).ready(function() {
   });
 });
 
-
-// api.getItems();
-
-// api.createItem('pears', (newItem) => {
-//   api.getItems((items) => {
-//     console.log(items);
-//   });
-// });
-
-
-
