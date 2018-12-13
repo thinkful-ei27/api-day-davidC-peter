@@ -69,10 +69,11 @@ const shoppingList = (function(){
       $('.js-shopping-list-entry').val('');
       api.createItem(newItemName, (newItem) => {
         store.addItem(newItem);
-        render();
-      });
+        render(); 
+      }, (error)=> alert(error.responseJSON.message));
     });
-  }
+    
+  };
   
   function getItemIdFromElement(item) {
     return $(item)
@@ -101,9 +102,11 @@ const shoppingList = (function(){
       // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
       // delete the item
-      store.findAndDelete(id);
-      // render the updated shopping list
-      render();
+      const itemToDelete = $(event.currentTarget).find('.shopping-item');
+      api.deleteItem(id, function(){
+        store.findAndDelete(id);
+        render();
+      });
     });
   }
   

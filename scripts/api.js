@@ -11,9 +11,11 @@ const api = (function () {
     `, callback);
 
   };
-  const createItem = function(name, callback){
+
+  const createItem = function(name, successCallback, errorCallback){
     const newItem = JSON.stringify({
       name: name,
+
 
     });
     $.ajax(
@@ -22,7 +24,8 @@ const api = (function () {
         method: 'POST',
         contentType: 'application/json',
         data: newItem,
-        success: callback,
+        success: successCallback,
+        error: errorCallback,
       }
     );
   };
@@ -40,10 +43,29 @@ const api = (function () {
   
   };
 
+  const deleteItem = function(id, callback){
+    $.ajax(
+      {
+        url: `${BASE_URL}/items/${id}`,
+        method: 'DELETE',
+        contentType: 'application/json',
+        data: deleteItem,
+        success: callback,
+      }
+    );
+  
+  };
+
+  const errorMessage = function(){
+     console.log(`invalid ${store.error}`);
+  };
+
   return {
     getItems,
     createItem,
     updateItem,
+    deleteItem,
+    errorMessage,
   };
 
 }());

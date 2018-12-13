@@ -33,10 +33,12 @@ const store = (function(){
     return Object.assign(foundItem, newData);
   };
 
+  
   return {
     items: [],
     hideCheckedItems: false,
     searchTerm: '',
+    error: '',
 
     addItem,
     findById,
@@ -44,7 +46,8 @@ const store = (function(){
     toggleCheckedFilter,
     setSearchTerm,
     setItemIsEditing,
-    findAndUpdate
+    findAndUpdate,
   };
+  
   
 }());
